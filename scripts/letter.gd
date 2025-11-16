@@ -9,3 +9,4 @@ func _ready() -> void:
 func _on_text_changed(new_text: String) -> void:
 	text = new_text.to_upper()
 	caret_column = text.length()
+	SignalBus.changed_letter.emit(new_text, self)
