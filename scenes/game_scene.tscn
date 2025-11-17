@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://da8tohhwwc81q" path="res://scripts/game_scene.gd" id="1_onqr8"]
 [ext_resource type="Script" uid="uid://m58lcfrw066j" path="res://scripts/letter.gd" id="1_w5aja"]
 
-[node name="GameScene" type="Control"]
+[node name="GameScene" type="Control" unique_id=583433392]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,7 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_onqr8")
 
-[node name="WordsContainer" type="VBoxContainer" parent="."]
+[node name="WordsContainer" type="VBoxContainer" parent="." unique_id=391244189]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -27,64 +27,48 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
 
-[node name="LetterContainer" type="HBoxContainer" parent="WordsContainer"]
+[node name="LetterContainer" type="HBoxContainer" parent="WordsContainer" unique_id=1858036177]
 layout_mode = 2
 theme_override_constants/separation = 8
 alignment = 1
 
-[node name="Letter" type="LineEdit" parent="WordsContainer/LetterContainer"]
+[node name="Letter" type="LineEdit" parent="WordsContainer/LetterContainer" unique_id=905012656]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 theme_override_colors/caret_color = Color(0.9490196, 0.9490196, 0.9490196, 0)
 theme_override_font_sizes/font_size = 16
 script = ExtResource("1_w5aja")
 
-[node name="Letter2" type="LineEdit" parent="WordsContainer/LetterContainer"]
+[node name="Letter2" type="LineEdit" parent="WordsContainer/LetterContainer" unique_id=1228698792]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 theme_override_colors/caret_color = Color(0.9490196, 0.9490196, 0.9490196, 0)
 theme_override_font_sizes/font_size = 16
 script = ExtResource("1_w5aja")
 
-[node name="Letter3" type="LineEdit" parent="WordsContainer/LetterContainer"]
+[node name="Letter3" type="LineEdit" parent="WordsContainer/LetterContainer" unique_id=1850734126]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 theme_override_colors/caret_color = Color(0.9490196, 0.9490196, 0.9490196, 0)
 theme_override_font_sizes/font_size = 16
 script = ExtResource("1_w5aja")
 
-[node name="Letter4" type="LineEdit" parent="WordsContainer/LetterContainer"]
+[node name="Letter4" type="LineEdit" parent="WordsContainer/LetterContainer" unique_id=1010612802]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 theme_override_colors/caret_color = Color(0.9490196, 0.9490196, 0.9490196, 0)
 theme_override_font_sizes/font_size = 16
 script = ExtResource("1_w5aja")
 
-[node name="Letter5" type="LineEdit" parent="WordsContainer/LetterContainer"]
+[node name="Letter5" type="LineEdit" parent="WordsContainer/LetterContainer" unique_id=331600588]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 theme_override_colors/caret_color = Color(0.9490196, 0.9490196, 0.9490196, 0)
 theme_override_font_sizes/font_size = 16
 script = ExtResource("1_w5aja")
-
-[node name="CheckButton" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -30.0
-offset_top = -65.0
-offset_right = 30.0
-offset_bottom = -34.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "CHECK"
 
 [connection signal="text_changed" from="WordsContainer/LetterContainer/Letter" to="WordsContainer/LetterContainer/Letter" method="_on_text_changed"]
 [connection signal="text_changed" from="WordsContainer/LetterContainer/Letter2" to="WordsContainer/LetterContainer/Letter2" method="_on_text_changed"]
 [connection signal="text_changed" from="WordsContainer/LetterContainer/Letter3" to="WordsContainer/LetterContainer/Letter3" method="_on_text_changed"]
 [connection signal="text_changed" from="WordsContainer/LetterContainer/Letter4" to="WordsContainer/LetterContainer/Letter4" method="_on_text_changed"]
 [connection signal="text_changed" from="WordsContainer/LetterContainer/Letter5" to="WordsContainer/LetterContainer/Letter5" method="_on_text_changed"]
-[connection signal="pressed" from="CheckButton" to="." method="_on_check_button_pressed"]

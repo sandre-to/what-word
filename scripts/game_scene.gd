@@ -4,7 +4,6 @@ const WORD_MAX_LENGTH: int = 4
 const WORD_PATH_FILE: String = "res://assets/list_of_words/5-letter-words.txt"
 
 @onready var letter_container: HBoxContainer = $WordsContainer/LetterContainer
-@onready var check_button: Button = $CheckButton
 
 var current_word: String = ""
 var guessed_word_sequence: Array[String] = []
@@ -13,6 +12,27 @@ var rng := RandomNumberGenerator.new()
 func _ready() -> void:
 	SignalBus.changed_letter.connect(_updated_letter_box)
 	random_word_from_list()
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_accept"):
+		if guessed_word_sequence.size() < current_word.length() - 1: 
+			print("Word not filled out")
+			return
+		
+		var guessed_word := "".join(guessed_word_sequence).to_lower()
+		var list_of_words := load_from_file(WORD_PATH_FILE)
+		
+		for word in list_of_words:
+			if word == guessed_word:
+				print("The word exists")
+				for letter in word.length():
+					if word[letter] in current_word:
+						print("The letter [%s] is in the word" % word[letter])
+					else:
+						print("Letter [%s] not in word" % word[letter])
+				return
+		
+		print("The word doesn't exist!")
 
 func _on_check_button_pressed() -> void:
 	if guessed_word_sequence.size() < current_word.length() - 1: return
