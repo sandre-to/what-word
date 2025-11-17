@@ -22,11 +22,17 @@ func _input(event: InputEvent) -> void:
 		var guessed_word := "".join(guessed_word_sequence).to_lower()
 		var list_of_words := load_from_file(WORD_PATH_FILE)
 		
+		# GAMEPLAY LOOP -- Checking if the guessed word is the same as current word
 		for word in list_of_words:
 			if word == guessed_word:
 				print("The word exists")
 				for letter in word.length():
 					if word[letter] in current_word:
+						if word[letter] == current_word[letter]:
+							letter_container.get_child(letter).modulate = Color.GREEN
+						else:
+							letter_container.get_child(letter).modulate = Color.ORANGE
+
 						print("The letter [%s] is in the word" % word[letter])
 					else:
 						print("Letter [%s] not in word" % word[letter])
