@@ -25,36 +25,23 @@ func _input(event: InputEvent) -> void:
 		# GAMEPLAY LOOP -- Checking if the guessed word is the same as current word
 		for word in list_of_words:
 			if word == guessed_word:
+				for letter_box in letter_container.get_children():
+					letter_box.editable = false
 				print("The word exists")
+				
 				for letter in word.length():
 					if word[letter] in current_word:
 						if word[letter] == current_word[letter]:
 							letter_container.get_child(letter).modulate = Color.GREEN
 						else:
 							letter_container.get_child(letter).modulate = Color.ORANGE
-
 						print("The letter [%s] is in the word" % word[letter])
 					else:
 						print("Letter [%s] not in word" % word[letter])
+						
 				return
 		
 		print("The word doesn't exist!")
-
-func _on_check_button_pressed() -> void:
-	if guessed_word_sequence.size() < current_word.length() - 1: return
-	
-	for letter: LineEdit in letter_container.get_children():
-		if not letter.editable: return
-		if letter.text == "": return
-		
-		letter.editable = false
-		guessed_word_sequence.append(letter.text)
-	
-	var guessed_word: String = "".join(guessed_word_sequence).to_lower()
-	if guessed_word == current_word:
-		print("U GJUESSED RIGHT")
-	else:
-		print("WRONG!")
 
 func load_from_file(path) -> PackedStringArray:
 	var file: FileAccess = FileAccess.open(path, FileAccess.READ)
@@ -79,3 +66,10 @@ func _updated_letter_box(letter: String, source: LineEdit) -> void:
 	
 	guessed_word_sequence[index] = letter
 	print("".join(guessed_word_sequence).to_lower())
+
+func check_guessed_word(guessed_word: String, list_of_words: PackedStringArray) -> void:
+	if guessed_word in list_of_words:
+		print("WORD IS IN LIST!")
+		return
+	
+	print("Word is not in list")
