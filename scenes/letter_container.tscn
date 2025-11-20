@@ -1,0 +1,61 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7le4ll5gbbvy"]
+
+[ext_resource type="Script" uid="uid://m58lcfrw066j" path="res://scripts/letter.gd" id="1_13pys"]
+[ext_resource type="Script" uid="uid://b46culmupyyie" path="res://scripts/letter_container.gd" id="1_i1a7q"]
+
+[node name="LetterContainer" type="HBoxContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -186.0
+offset_top = -32.0
+offset_right = 186.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+alignment = 1
+script = ExtResource("1_i1a7q")
+
+[node name="Letter" type="LineEdit" parent="."]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_colors/caret_color = Color(0.9490196, 0.9490196, 0.9490196, 0)
+theme_override_font_sizes/font_size = 16
+script = ExtResource("1_13pys")
+
+[node name="Letter2" type="LineEdit" parent="."]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_colors/caret_color = Color(0.9490196, 0.9490196, 0.9490196, 0)
+theme_override_font_sizes/font_size = 16
+script = ExtResource("1_13pys")
+
+[node name="Letter3" type="LineEdit" parent="."]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_colors/caret_color = Color(0.9490196, 0.9490196, 0.9490196, 0)
+theme_override_font_sizes/font_size = 16
+script = ExtResource("1_13pys")
+
+[node name="Letter4" type="LineEdit" parent="."]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_colors/caret_color = Color(0.9490196, 0.9490196, 0.9490196, 0)
+theme_override_font_sizes/font_size = 16
+script = ExtResource("1_13pys")
+
+[node name="Letter5" type="LineEdit" parent="."]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_colors/caret_color = Color(0.9490196, 0.9490196, 0.9490196, 0)
+theme_override_font_sizes/font_size = 16
+script = ExtResource("1_13pys")
+
+[connection signal="text_changed" from="Letter" to="Letter" method="_on_text_changed"]
+[connection signal="text_changed" from="Letter2" to="Letter2" method="_on_text_changed"]
+[connection signal="text_changed" from="Letter3" to="Letter3" method="_on_text_changed"]
+[connection signal="text_changed" from="Letter4" to="Letter4" method="_on_text_changed"]
+[connection signal="text_changed" from="Letter5" to="Letter5" method="_on_text_changed"]
