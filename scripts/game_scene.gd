@@ -18,7 +18,11 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept") and not has_played:
-		if counter >= 3:
+		var letter_container := get_child(0)
+		
+		if counter >= 2:
+			for letter_box in letter_container.get_children():
+				letter_box.editable = false
 			print("NO MORE TRIES")
 			return
 		
@@ -28,7 +32,6 @@ func _input(event: InputEvent) -> void:
 		
 		var guessed_word := "".join(guessed_word_sequence).to_lower()
 		var list_of_words := load_from_file(WORD_PATH_FILE)
-		var letter_container := get_child(0)
 		has_played = true
 		
 		# GAMEPLAY LOOP -- Checking if the guessed word is the same as current word
@@ -93,6 +96,9 @@ func check_guessed_word(guessed_word: String, list_of_words: PackedStringArray) 
 	print("Word is not in list")
 
 func _on_new_box_timer_timeout() -> void:
+	if counter >= 3:
+		has_played = true
+	
 	has_played = false
 	for letter_box in get_children():
 		if letter_box is LetterContainer:
