@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b7le4ll5gbbvy"]
 
-[ext_resource type="Script" uid="uid://b46culmupyyie" path="res://scripts/letter_container.gd" id="1_i1a7q"]
+[ext_resource type="Script" uid="uid://b46culmupyyie" path="res://scripts/row.gd" id="1_i1a7q"]
 
 [node name="Row" type="HBoxContainer"]
 anchors_preset = 8
