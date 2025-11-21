@@ -10,9 +10,3 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_onqr8")
-
-[node name="NewBoxTimer" type="Timer" parent="."]
-wait_time = 4.0
-one_shot = true
-
-[connection signal="timeout" from="NewBoxTimer" to="." method="_on_new_box_timer_timeout"]
