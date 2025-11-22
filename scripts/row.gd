@@ -14,6 +14,7 @@ const CELL: PackedScene = preload("res://scenes/cell.tscn")
 var current_index: int = 0
 var guessed_word: Array[String] = []
 var game_manager: GameScene = null
+var is_word_correct: bool = false
 
 func _ready() -> void:
 	for i in range(amount_cells):
@@ -54,6 +55,7 @@ func _input(event: InputEvent) -> void:
 		if event.is_action_pressed("ui_accept"):
 			var word_file := game_manager.load_from_file(game_manager.WORD_PATH_FILE)
 			
+				
 			if current_guessed_word.length() < amount_cells: return
 			if not current_guessed_word in word_file: return
 
@@ -66,12 +68,16 @@ func _input(event: InputEvent) -> void:
 				if current_guessed_word[letter_index] == game_manager.current_word[letter_index]:
 					get_child(letter_index).modulate = Color.GREEN
 			
+				if current_guessed_word == game_manager.current_word:
+					is_word_correct = true
+			
 			for child in get_children():
 				child.can_edit = false
 				child.release_focus()
 				
-			game_manager.add_new_row()
-			set_process_input(false)
+			if not is_word_correct:
+				game_manager.add_new_row()
+				set_process_input(false)
 
 func _move_focus(index: int, which_way: int,  left: bool) -> void:
 	index += which_way
