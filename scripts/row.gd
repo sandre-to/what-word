@@ -53,15 +53,22 @@ func _input(event: InputEvent) -> void:
 		if event.is_action_pressed("ui_accept"):
 			var word_file := game_manager.load_from_file(game_manager.WORD_PATH_FILE)
 			
-			if current_guessed_word.length() < amount_cells:
-				print("Word not filled")
-				return
+			if current_guessed_word.length() < amount_cells: return
+			if not current_guessed_word in word_file: return
+
+			for letter in current_guessed_word:
+				var letter_index = current_guessed_word.find(letter)
+				
+				if letter in game_manager.current_word:
+					get_child(letter_index).modulate = Color.ORANGE
+				
+				if current_guessed_word[letter_index] == game_manager.current_word[letter_index]:
+					get_child(letter_index).modulate = Color.GREEN
 			
-			if current_guessed_word in word_file:
-				print("Word exist!")
-				return
-			
-			print("Word not in list!")
+			for child in get_children():
+				child.release_focus()
+
+
 func _move_focus(index: int, which_way: int,  left: bool) -> void:
 	index += which_way
 	
