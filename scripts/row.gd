@@ -17,14 +17,15 @@ var game_manager: GameScene = null
 
 func _ready() -> void:
 	for i in range(amount_cells):
-		var cell := CELL.instantiate()
+		var cell: Cell = CELL.instantiate()
+		cell.can_edit = true
 		add_child(cell)
 	
 	guessed_word.resize(amount_cells)
 	get_child(0).grab_focus()
 	set_process_input(true)
 	
-	game_manager = get_parent()
+	game_manager = get_tree().current_scene.get_node("/root/GameScene")
 	if game_manager == null:
 		push_error("Missing game manager.")
 	print(game_manager.current_word)
@@ -32,7 +33,7 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.is_pressed():
 		var focused_cell: Cell = get_viewport().gui_get_focus_owner()
-		if focused_cell == null:
+		if focused_cell == null or not focused_cell.can_edit:
 			return
 		
 		var index: int = get_children().find(focused_cell)
@@ -66,8 +67,11 @@ func _input(event: InputEvent) -> void:
 					get_child(letter_index).modulate = Color.GREEN
 			
 			for child in get_children():
+				child.can_edit = false
 				child.release_focus()
-
+				
+			game_manager.add_new_row()
+			set_process_input(false)
 
 func _move_focus(index: int, which_way: int,  left: bool) -> void:
 	index += which_way

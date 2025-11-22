@@ -3,6 +3,8 @@ class_name GameScene extends Control
 const WORD_PATH_FILE: String = "res://assets/list_of_words/5-letter-words.txt"
 const ROW: PackedScene = preload("res://scenes/row.tscn")
 
+@onready var container: VBoxContainer = $WordContainer
+
 var rng := RandomNumberGenerator.new()
 var current_word: String = ""
 
@@ -22,4 +24,5 @@ func random_word_from_list() -> void:
 	current_word = words.get(index)
 
 func add_new_row() -> void:
-	add_child(ROW.instantiate())
+	container.add_child(ROW.instantiate())
+	SignalBus.added_signal.emit()
