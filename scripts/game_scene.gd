@@ -11,6 +11,7 @@ var current_word: String = ""
 func _ready() -> void:
 	random_word_from_list()
 	add_new_row()
+	print(current_word)
 
 func load_from_file(path) -> PackedStringArray:
 	var file: FileAccess = FileAccess.open(path, FileAccess.READ)
