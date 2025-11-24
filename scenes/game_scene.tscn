@@ -1,7 +1,54 @@
-[gd_scene load_steps=3 format=3 uid="uid://cyf6iihcvf356"]
+[gd_scene load_steps=9 format=3 uid="uid://cyf6iihcvf356"]
 
 [ext_resource type="Script" uid="uid://da8tohhwwc81q" path="res://scripts/game_scene.gd" id="1_onqr8"]
 [ext_resource type="Script" uid="uid://dayy8ocaxy15y" path="res://scripts/word_container.gd" id="2_onqr8"]
+[ext_resource type="AudioStream" uid="uid://o05xu3mq52x0" path="res://assets/sfx/point-smooth-beep-230573.mp3" id="3_ycayy"]
+[ext_resource type="AudioStream" uid="uid://punoyagbimeu" path="res://assets/sfx/Crowds, Applause, Applause, Small Group SND123080.wav" id="4_bw6k5"]
+
+[sub_resource type="Animation" id="Animation_ycayy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeOut:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_onqr8"]
+resource_name = "fade_out"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeOut:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bw6k5"]
+_data = {
+&"RESET": SubResource("Animation_ycayy"),
+&"fade_out": SubResource("Animation_onqr8")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_bw6k5"]
+font_size = 36
+font_color = Color(1, 0.56078434, 0.25882354, 1)
+outline_size = 12
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 10
+shadow_color = Color(0, 0, 0, 1)
 
 [node name="GameScene" type="Control"]
 layout_mode = 3
@@ -26,3 +73,72 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_onqr8")
+
+[node name="BackgroundColor" type="ColorRect" parent="."]
+z_index = -15
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.062001348, 0.38779965, 0.6745677, 1)
+
+[node name="FadeOut" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_bw6k5")
+}
+
+[node name="ScoreSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ycayy")
+
+[node name="ApplauseSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_bw6k5")
+
+[node name="RestartButton" type="Button" parent="."]
+visible = false
+custom_minimum_size = Vector2(96, 32)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -48.0
+offset_top = -52.0
+offset_right = 48.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "RESTART"
+icon_alignment = 1
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="TimerLabel" type="Label" parent="."]
+z_index = 10
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 2.0
+offset_right = 20.0
+offset_bottom = 52.0
+grow_horizontal = 2
+label_settings = SubResource("LabelSettings_bw6k5")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

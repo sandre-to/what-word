@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bs3r432nia2on"]
+[gd_scene load_steps=6 format=3 uid="uid://bs3r432nia2on"]
 
 [ext_resource type="Script" uid="uid://c2q06o5nscw4o" path="res://scripts/cell.gd" id="1_upbjj"]
+[ext_resource type="AudioStream" uid="uid://cag72e1jy8r3v" path="res://assets/sfx/Computers, Keyboard & Mouse, Keyboard, Apple Magic, Space Bar Press SND33106 4.wav" id="2_0s7o3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ngbm"]
 bg_color = Color(0.16565639, 0.16565642, 0.1656563, 1)
@@ -19,8 +20,8 @@ corner_radius_bottom_left = 8
 [sub_resource type="LabelSettings" id="LabelSettings_6ngbm"]
 line_spacing = 0.0
 font_size = 36
-outline_size = 8
-outline_color = Color(0, 0, 0, 1)
+outline_size = 6
+outline_color = Color(0, 0, 0, 0.5921569)
 
 [node name="Cell" type="Label"]
 custom_minimum_size = Vector2(53, 53)
@@ -43,3 +44,6 @@ label_settings = SubResource("LabelSettings_6ngbm")
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("1_upbjj")
+
+[node name="LetterSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_0s7o3")

@@ -11,6 +11,7 @@ const CELL: PackedScene = preload("res://scenes/cell.tscn")
 @export var amount_cells: MaxCells = MaxCells.THREE
 
 var guessed_word: Array[String] = []
+var wrong_letters: Array[String] = []
 var game_manager: GameScene = null
 var is_word_correct: bool = false
 var tween: Tween
@@ -56,6 +57,7 @@ func _input(event: InputEvent) -> void:
 			if current_guessed_word.length() < amount_cells: return
 			if not current_guessed_word in word_file: return
 
+			animate()
 			_check_word(current_guessed_word)
 			_release_focus()
 			
@@ -71,26 +73,36 @@ func _move_focus(index: int, which_way: int,  left: bool) -> void:
 	get_child(index).grab_focus()
 
 func _check_word(word: String) -> void:
-	animate()
-	
+	var has_tweens: bool = false
 	for i in range(amount_cells):
 		var letter = word[i]
+		var cell: Cell = get_child(i)
 		
 		if letter in game_manager.current_word:
+			has_tweens = true
+			
 			tween.set_trans(Tween.TRANS_BOUNCE)
-			tween.tween_property(get_child(i), "scale", Vector2(1.25, 1.25), 0.15)
-			tween.tween_property(get_child(i), "modulate", Color.GRAY, 0.12)
-			tween.tween_property(get_child(i), "rotation_degrees", 360, 0.07)
-			tween.tween_property(get_child(i), "modulate", Color.ORANGE, 0.12)
-			tween.tween_property(get_child(i), "scale", Vector2.ONE, 0.15)
+			tween.tween_callback(Callable(SignalBus.sound_played.emit))
+			tween.tween_property(cell, "scale", Vector2(1.25, 1.25), 0.15)
+			tween.tween_property(cell, "modulate", Color.GRAY, 0.17)
+			tween.tween_property(cell, "rotation_degrees", 360, 0.15)
+			tween.tween_property(cell, "modulate", Color.ORANGE, 0.12)
+			tween.tween_property(cell, "scale", Vector2.ONE, 0.15)
 			
 		if letter == game_manager.current_word[i]:
+			has_tweens = true
 			tween.set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_IN)
-			tween.tween_property(get_child(i), "modulate", Color.GREEN, 0.2)
+			tween.tween_property(cell, "modulate", Color.GREEN, 0.2)
 		
-		if word == game_manager.current_word:
-			is_word_correct = true
-
+		
+	if not has_tweens:
+		tween.tween_interval(0.02)
+	
+	await tween.finished
+	if word == game_manager.current_word:
+		is_word_correct = true
+		SignalBus.guessed_correct_word.emit()
+	
 func _release_focus() -> void:
 	for child in get_children():
 		child.can_edit = false

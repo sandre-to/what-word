@@ -1,5 +1,7 @@
 class_name Cell extends Label
 
+@onready var letter_sound: AudioStreamPlayer = $LetterSound
+
 var letter: String = "":
 	set(value):
 		if value.length() > 0 and \
@@ -9,6 +11,7 @@ var letter: String = "":
 		else:
 			letter = ""
 		text = letter
+		letter_sound.play()
 
 var can_edit: bool = true:
 	set(value):
