@@ -1569,6 +1569,7 @@ logic
 login
 loins
 longs
+loner
 looks
 looms
 loons

@@ -26,7 +26,7 @@ func _ready() -> void:
 	get_child(0).grab_focus()
 	set_process_input(true)
 	
-	game_manager = get_tree().current_scene.get_node("/root/GameScene")
+	game_manager = get_tree().get_first_node_in_group("game_scene")
 	if game_manager == null:
 		push_error("Missing game manager.")
 

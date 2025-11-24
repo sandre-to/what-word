@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cyf6iihcvf356"]
+[gd_scene load_steps=11 format=3 uid="uid://cyf6iihcvf356"]
 
 [ext_resource type="Script" uid="uid://da8tohhwwc81q" path="res://scripts/game_scene.gd" id="1_onqr8"]
 [ext_resource type="Script" uid="uid://dayy8ocaxy15y" path="res://scripts/word_container.gd" id="2_onqr8"]
@@ -50,7 +50,12 @@ outline_color = Color(0, 0, 0, 1)
 shadow_size = 10
 shadow_color = Color(0, 0, 0, 1)
 
-[node name="GameScene" type="Control"]
+[sub_resource type="LabelSettings" id="LabelSettings_y3j0m"]
+font_size = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_rurhu"]
+
+[node name="GameScene" type="Control" groups=["game_scene"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -58,6 +63,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_onqr8")
+time_in_minutes = 2
 
 [node name="WordContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -85,6 +91,8 @@ grow_vertical = 2
 color = Color(0.062001348, 0.38779965, 0.6745677, 1)
 
 [node name="FadeOut" type="ColorRect" parent="."]
+visible = false
+z_index = 10
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -139,6 +147,86 @@ grow_horizontal = 2
 label_settings = SubResource("LabelSettings_bw6k5")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="HelpBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 23.0
+offset_top = -66.0
+offset_right = 151.0
+offset_bottom = 66.0
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="HelpBox"]
+custom_minimum_size = Vector2(128, 64)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HelpBox/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BoxTitle" type="Label" parent="HelpBox/Panel/VBoxContainer"]
+layout_mode = 2
+text = "WRONG LETTERS"
+label_settings = SubResource("LabelSettings_y3j0m")
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HelpBox/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HelpBox/Panel/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="Letters" type="Label" parent="HelpBox/Panel/VBoxContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+label_settings = SubResource("LabelSettings_rurhu")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Panel2" type="Panel" parent="HelpBox"]
+custom_minimum_size = Vector2(128, 64)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HelpBox/Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BoxTitle" type="Label" parent="HelpBox/Panel2/VBoxContainer"]
+layout_mode = 2
+text = "RIGHT LETTERS"
+label_settings = SubResource("LabelSettings_y3j0m")
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HelpBox/Panel2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HelpBox/Panel2/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="Letters" type="Label" parent="HelpBox/Panel2/VBoxContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
 
 [connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

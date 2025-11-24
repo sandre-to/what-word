@@ -3,6 +3,8 @@ class_name GameScene extends Control
 const WORD_PATH_FILE: String = "res://assets/list_of_words/5-letter-words.txt"
 const ROW: PackedScene = preload("res://scenes/row.tscn")
 
+@export var time_in_minutes: int = 3
+
 @onready var container: VBoxContainer = $WordContainer
 
 #effects
@@ -16,7 +18,6 @@ const ROW: PackedScene = preload("res://scenes/row.tscn")
 
 var rng := RandomNumberGenerator.new()
 var current_word: String = ""
-var time_in_minutes: int = 3
 var time_in_secs: int = 0
 
 func _ready() -> void:
@@ -49,6 +50,7 @@ func _on_correct_letter() -> void:
 	score_sound.play()
 
 func _on_correct_word() -> void:
+	game_timer.stop()
 	applause_sound.play()
 	restart_button.show()
 
@@ -56,6 +58,12 @@ func _on_restart_button_pressed() -> void:
 	get_tree().reload_current_scene()
 
 func _on_timer_timeout() -> void:
+	if time_in_secs <= 0:
+		game_timer.stop()
+		time_in_secs = 0
+		restart_button.show()
+		return
+	
 	time_in_secs -= 1 
 	var minutes := int(time_in_secs / 60)
 	var seconds := time_in_secs - minutes * 60
