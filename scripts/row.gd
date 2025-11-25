@@ -78,9 +78,12 @@ func _check_word(word: String) -> void:
 		var letter = word[i]
 		var cell: Cell = get_child(i)
 		
+		if letter not in game_manager.current_word:
+			SignalBus.sent_wrong_keys.emit(letter)
+		
 		if letter in game_manager.current_word:
 			has_tweens = true
-			
+			SignalBus.sent_right_keys.emit(letter)
 			tween.set_trans(Tween.TRANS_BOUNCE)
 			tween.tween_callback(Callable(SignalBus.sound_played.emit))
 			tween.tween_property(cell, "scale", Vector2(1.25, 1.25), 0.15)

@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://cyf6iihcvf356"]
+[gd_scene load_steps=12 format=3 uid="uid://cyf6iihcvf356"]
 
 [ext_resource type="Script" uid="uid://da8tohhwwc81q" path="res://scripts/game_scene.gd" id="1_onqr8"]
 [ext_resource type="Script" uid="uid://dayy8ocaxy15y" path="res://scripts/word_container.gd" id="2_onqr8"]
 [ext_resource type="AudioStream" uid="uid://o05xu3mq52x0" path="res://assets/sfx/point-smooth-beep-230573.mp3" id="3_ycayy"]
 [ext_resource type="AudioStream" uid="uid://punoyagbimeu" path="res://assets/sfx/Crowds, Applause, Applause, Small Group SND123080.wav" id="4_bw6k5"]
+[ext_resource type="Script" uid="uid://eoqvqmuwkwix" path="res://scenes/help_box.gd" id="5_y3j0m"]
 
 [sub_resource type="Animation" id="Animation_ycayy"]
 length = 0.001
@@ -158,6 +159,7 @@ offset_top = -66.0
 offset_right = 151.0
 offset_bottom = 66.0
 grow_vertical = 2
+script = ExtResource("5_y3j0m")
 
 [node name="Panel" type="Panel" parent="HelpBox"]
 custom_minimum_size = Vector2(128, 64)
@@ -186,7 +188,8 @@ size_flags_vertical = 4
 layout_mode = 2
 size_flags_horizontal = 6
 
-[node name="Letters" type="Label" parent="HelpBox/Panel/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="WrongLetters" type="Label" parent="HelpBox/Panel/VBoxContainer/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
 label_settings = SubResource("LabelSettings_rurhu")
@@ -221,7 +224,8 @@ size_flags_vertical = 4
 layout_mode = 2
 size_flags_horizontal = 6
 
-[node name="Letters" type="Label" parent="HelpBox/Panel2/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="RightLetters" type="Label" parent="HelpBox/Panel2/VBoxContainer/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
 horizontal_alignment = 1
