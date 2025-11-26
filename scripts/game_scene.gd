@@ -8,13 +8,14 @@ const ROW: PackedScene = preload("res://scenes/row.tscn")
 @onready var container: VBoxContainer = $WordContainer
 
 #effects
-@onready var anim: AnimationPlayer = $AnimationPlayer
-@onready var score_sound: AudioStreamPlayer = $ScoreSound
-@onready var applause_sound: AudioStreamPlayer = $ApplauseSound
-@onready var restart_button: Button = $RestartButton
+@onready var anim: AnimationPlayer = $VisualEffects/AnimationPlayer
+@onready var score_sound: AudioStreamPlayer = $SFX/ScoreSound
+@onready var applause_sound: AudioStreamPlayer = $SFX/ApplauseSound
+@onready var restart_button: Button = $UI/RestartButton
+@onready var fade_out: ColorRect = $VisualEffects/FadeOut
 
-@onready var game_timer: Timer = $Timer
-@onready var timer_label: Label = $TimerLabel
+@onready var game_timer: Timer = $UI/Timer
+@onready var timer_label: Label = $UI/TimerLabel
 
 var rng := RandomNumberGenerator.new()
 var current_word: String = ""
@@ -23,6 +24,8 @@ var time_in_secs: int = 0
 func _ready() -> void:
 	SignalBus.sound_played.connect(_on_correct_letter)
 	SignalBus.guessed_correct_word.connect(_on_correct_word)
+	
+	fade_out.show()
 	anim.play("fade_out")
 	time_in_secs = time_in_minutes * 60
 	timer_label.text = '%02d:%02d' % [time_in_minutes, 0]
@@ -62,6 +65,9 @@ func _on_timer_timeout() -> void:
 		game_timer.stop()
 		time_in_secs = 0
 		restart_button.show()
+		
+		for child in container.get_children():
+			child.queue_free()
 		return
 	
 	time_in_secs -= 1 

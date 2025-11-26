@@ -10,19 +10,19 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kk2rg"]
 shader = ExtResource("3_rurhu")
-shader_parameter/bottom_color = Color(0.9458652, 0.240572, 0.6109211, 1)
-shader_parameter/top_color = Color(0.8209888, 0.57463926, 0.31935406, 1)
-shader_parameter/wave_amp = 0.1570000074575
-shader_parameter/wave_size = 2.4650000695875
-shader_parameter/wave_time_mul = 0.20000000624012
-shader_parameter/total_phases = 8
+shader_parameter/bottom_color = Color(0.87207687, 0.16397205, 0.5496936, 1)
+shader_parameter/top_color = Color(0.76184857, 0.53035194, 0.27543336, 1)
+shader_parameter/wave_amp = 0.070000003325
+shader_parameter/wave_size = 1.0
+shader_parameter/wave_time_mul = 0.30000001099011997
+shader_parameter/total_phases = 4
 
 [sub_resource type="Animation" id="Animation_ycayy"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("FadeOut:self_modulate")
+tracks/0/path = NodePath("VisualEffects/FadeOut:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -38,7 +38,7 @@ length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("FadeOut:self_modulate")
+tracks/0/path = NodePath("VisualEffects/FadeOut:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -73,7 +73,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_onqr8")
-time_in_minutes = 2
+time_in_minutes = 1
 
 [node name="WordContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -92,19 +92,28 @@ theme_override_constants/separation = 8
 alignment = 1
 script = ExtResource("2_onqr8")
 
-[node name="BackgroundColor" type="ColorRect" parent="."]
+[node name="SFX" type="Node" parent="."]
+
+[node name="ScoreSound" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("3_ycayy")
+
+[node name="ApplauseSound" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("4_bw6k5")
+
+[node name="VisualEffects" type="Node" parent="."]
+
+[node name="BackgroundColor" type="ColorRect" parent="VisualEffects"]
 z_index = -15
 material = SubResource("ShaderMaterial_kk2rg")
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="FadeOut" type="ColorRect" parent="."]
+[node name="FadeOut" type="ColorRect" parent="VisualEffects"]
+visible = false
 z_index = 10
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -112,21 +121,34 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="VisualEffects"]
+root_node = NodePath("../..")
 libraries = {
 &"": SubResource("AnimationLibrary_bw6k5")
 }
 
-[node name="ScoreSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_ycayy")
+[node name="UI" type="Node" parent="."]
 
-[node name="ApplauseSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_bw6k5")
+[node name="Timer" type="Timer" parent="UI"]
+autostart = true
 
-[node name="RestartButton" type="Button" parent="."]
+[node name="TimerLabel" type="Label" parent="UI"]
+z_index = 10
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 10.0
+offset_right = 20.0
+offset_bottom = 60.0
+grow_horizontal = 2
+label_settings = SubResource("LabelSettings_bw6k5")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RestartButton" type="Button" parent="UI"]
 visible = false
 custom_minimum_size = Vector2(96, 32)
-layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -141,26 +163,7 @@ grow_vertical = 0
 text = "RESTART"
 icon_alignment = 1
 
-[node name="Timer" type="Timer" parent="."]
-autostart = true
-
-[node name="TimerLabel" type="Label" parent="."]
-z_index = 10
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -16.0
-offset_top = 12.0
-offset_right = 24.0
-offset_bottom = 62.0
-grow_horizontal = 2
-label_settings = SubResource("LabelSettings_bw6k5")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HelpBox" type="VBoxContainer" parent="."]
-layout_mode = 1
+[node name="HelpBox" type="VBoxContainer" parent="UI"]
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
@@ -171,11 +174,11 @@ offset_bottom = 66.0
 grow_vertical = 2
 script = ExtResource("5_y3j0m")
 
-[node name="Panel" type="Panel" parent="HelpBox"]
+[node name="Panel" type="Panel" parent="UI/HelpBox"]
 custom_minimum_size = Vector2(128, 64)
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HelpBox/Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/HelpBox/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -183,22 +186,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BoxTitle" type="Label" parent="HelpBox/Panel/VBoxContainer"]
+[node name="BoxTitle" type="Label" parent="UI/HelpBox/Panel/VBoxContainer"]
 layout_mode = 2
 text = "WRONG LETTERS"
 label_settings = SubResource("LabelSettings_y3j0m")
 horizontal_alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HelpBox/Panel/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/HelpBox/Panel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HelpBox/Panel/VBoxContainer/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/HelpBox/Panel/VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 
-[node name="WrongLetters" type="Label" parent="HelpBox/Panel/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="WrongLetters" type="Label" parent="UI/HelpBox/Panel/VBoxContainer/ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
@@ -207,11 +210,11 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="Panel2" type="Panel" parent="HelpBox"]
+[node name="Panel2" type="Panel" parent="UI/HelpBox"]
 custom_minimum_size = Vector2(128, 64)
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HelpBox/Panel2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/HelpBox/Panel2"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -219,22 +222,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BoxTitle" type="Label" parent="HelpBox/Panel2/VBoxContainer"]
+[node name="BoxTitle" type="Label" parent="UI/HelpBox/Panel2/VBoxContainer"]
 layout_mode = 2
 text = "RIGHT LETTERS"
 label_settings = SubResource("LabelSettings_y3j0m")
 horizontal_alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HelpBox/Panel2/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/HelpBox/Panel2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HelpBox/Panel2/VBoxContainer/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/HelpBox/Panel2/VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 
-[node name="RightLetters" type="Label" parent="HelpBox/Panel2/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="RightLetters" type="Label" parent="UI/HelpBox/Panel2/VBoxContainer/ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
@@ -242,5 +245,5 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="UI/Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="UI/RestartButton" to="." method="_on_restart_button_pressed"]
