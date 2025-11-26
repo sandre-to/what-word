@@ -1,10 +1,21 @@
-[gd_scene load_steps=12 format=3 uid="uid://cyf6iihcvf356"]
+[gd_scene load_steps=15 format=3 uid="uid://cyf6iihcvf356"]
 
 [ext_resource type="Script" uid="uid://da8tohhwwc81q" path="res://scripts/game_scene.gd" id="1_onqr8"]
 [ext_resource type="Script" uid="uid://dayy8ocaxy15y" path="res://scripts/word_container.gd" id="2_onqr8"]
+[ext_resource type="Shader" uid="uid://d0s0d3yugmoec" path="res://scripts/shaders/background.gdshader" id="3_rurhu"]
 [ext_resource type="AudioStream" uid="uid://o05xu3mq52x0" path="res://assets/sfx/point-smooth-beep-230573.mp3" id="3_ycayy"]
 [ext_resource type="AudioStream" uid="uid://punoyagbimeu" path="res://assets/sfx/Crowds, Applause, Applause, Small Group SND123080.wav" id="4_bw6k5"]
 [ext_resource type="Script" uid="uid://eoqvqmuwkwix" path="res://scenes/help_box.gd" id="5_y3j0m"]
+[ext_resource type="FontFile" uid="uid://n8ct26wk8cj6" path="res://assets/fonts/Qilka-Bold copy.otf" id="6_kk2rg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kk2rg"]
+shader = ExtResource("3_rurhu")
+shader_parameter/bottom_color = Color(0.9458652, 0.240572, 0.6109211, 1)
+shader_parameter/top_color = Color(0.8209888, 0.57463926, 0.31935406, 1)
+shader_parameter/wave_amp = 0.1570000074575
+shader_parameter/wave_size = 2.4650000695875
+shader_parameter/wave_time_mul = 0.20000000624012
+shader_parameter/total_phases = 8
 
 [sub_resource type="Animation" id="Animation_ycayy"]
 length = 0.001
@@ -44,12 +55,10 @@ _data = {
 }
 
 [sub_resource type="LabelSettings" id="LabelSettings_bw6k5"]
-font_size = 36
-font_color = Color(1, 0.56078434, 0.25882354, 1)
-outline_size = 12
-outline_color = Color(0, 0, 0, 1)
-shadow_size = 10
-shadow_color = Color(0, 0, 0, 1)
+font = ExtResource("6_kk2rg")
+font_size = 32
+outline_size = 4
+outline_color = Color(0.1584723, 0.15847233, 0.1584723, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_y3j0m"]
 font_size = 8
@@ -79,17 +88,19 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 8
+alignment = 1
 script = ExtResource("2_onqr8")
 
 [node name="BackgroundColor" type="ColorRect" parent="."]
 z_index = -15
+material = SubResource("ShaderMaterial_kk2rg")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.062001348, 0.38779965, 0.6745677, 1)
 
 [node name="FadeOut" type="ColorRect" parent="."]
 visible = false
@@ -140,10 +151,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -20.0
-offset_top = 2.0
-offset_right = 20.0
-offset_bottom = 52.0
+offset_left = -16.0
+offset_top = 12.0
+offset_right = 24.0
+offset_bottom = 62.0
 grow_horizontal = 2
 label_settings = SubResource("LabelSettings_bw6k5")
 horizontal_alignment = 1
