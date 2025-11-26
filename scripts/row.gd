@@ -86,16 +86,16 @@ func _check_word(word: String) -> void:
 			SignalBus.sent_right_keys.emit(letter)
 			tween.set_trans(Tween.TRANS_BOUNCE)
 			tween.tween_callback(Callable(SignalBus.sound_played.emit))
-			tween.tween_property(cell, "scale", Vector2(1.25, 1.25), 0.15)
-			tween.tween_property(cell, "modulate", Color.GRAY, 0.17)
-			tween.tween_property(cell, "rotation_degrees", 360, 0.15)
-			tween.tween_property(cell, "modulate", Color.ORANGE, 0.12)
-			tween.tween_property(cell, "scale", Vector2.ONE, 0.15)
+			tween.tween_property(cell, "scale", Vector2(1.25, 1.25), 0.13)
+			tween.tween_property(cell, "modulate", Color.GRAY, 0.13)
+			tween.tween_property(cell, "rotation_degrees", 360, 0.14)
+			tween.tween_property(cell, "modulate", Color.ORANGE, 0.1)
+			tween.tween_property(cell, "scale", Vector2.ONE, 0.1)
 			
 		if letter == game_manager.current_word[i]:
 			has_tweens = true
 			tween.set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_IN)
-			tween.tween_property(cell, "modulate", Color.GREEN, 0.2)
+			tween.tween_property(cell, "modulate", Color.GREEN, 0.1)
 		
 		
 	if not has_tweens:
