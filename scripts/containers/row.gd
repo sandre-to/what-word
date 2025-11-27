@@ -80,16 +80,22 @@ func _check_word(word: String) -> void:
 		
 		if letter not in game_manager.current_word:
 			SignalBus.sent_wrong_keys.emit(letter)
+			
+			var original_pos: Vector2 = cell.position
+			tween.set_trans(Tween.TRANS_BOUNCE)
+			tween.tween_property(cell, "position", cell.position + Vector2(0, -5), 0.15)
+			tween.tween_property(cell, "position", cell.position + Vector2(0, 5), 0.15)
+			tween.tween_property(cell, "position", original_pos, 0.1)
 		
 		if letter in game_manager.current_word:
 			has_tweens = true
 			SignalBus.sent_right_keys.emit(letter)
 			tween.set_trans(Tween.TRANS_BOUNCE)
 			tween.tween_callback(Callable(SignalBus.sound_played.emit))
-			tween.tween_property(cell, "scale", Vector2(1.25, 1.25), 0.13)
-			tween.tween_property(cell, "modulate", Color.GRAY, 0.13)
-			tween.tween_property(cell, "rotation_degrees", 360, 0.14)
-			tween.tween_property(cell, "modulate", Color.ORANGE, 0.1)
+			tween.tween_property(cell, "scale", Vector2(1.25, 1.25), 0.15)
+			tween.tween_property(cell, "modulate", Color.GRAY, 0.15)
+			tween.tween_property(cell, "rotation_degrees", 360, 0.2)
+			tween.tween_property(cell, "modulate", Color.ORANGE, 0.15)
 			tween.tween_property(cell, "scale", Vector2.ONE, 0.1)
 			
 		if letter == game_manager.current_word[i]:

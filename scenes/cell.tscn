@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bs3r432nia2on"]
 
 [ext_resource type="FontFile" uid="uid://n8ct26wk8cj6" path="res://assets/fonts/Qilka-Bold copy.otf" id="1_nm02e"]
-[ext_resource type="Script" uid="uid://c2q06o5nscw4o" path="res://scripts/cell.gd" id="1_upbjj"]
+[ext_resource type="Script" uid="uid://c2q06o5nscw4o" path="res://scripts/containers/cell.gd" id="1_upbjj"]
 [ext_resource type="AudioStream" uid="uid://cag72e1jy8r3v" path="res://assets/sfx/Computers, Keyboard & Mouse, Keyboard, Apple Magic, Space Bar Press SND33106 4.wav" id="2_0s7o3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ngbm"]

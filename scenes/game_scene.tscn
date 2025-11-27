@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://cyf6iihcvf356"]
 
-[ext_resource type="Script" uid="uid://da8tohhwwc81q" path="res://scripts/game_scene.gd" id="1_onqr8"]
-[ext_resource type="Script" uid="uid://dayy8ocaxy15y" path="res://scripts/word_container.gd" id="2_onqr8"]
+[ext_resource type="Script" uid="uid://da8tohhwwc81q" path="res://scripts/containers/game_scene.gd" id="1_onqr8"]
+[ext_resource type="Script" uid="uid://dayy8ocaxy15y" path="res://scripts/containers/word_container.gd" id="2_onqr8"]
 [ext_resource type="Shader" uid="uid://d0s0d3yugmoec" path="res://scripts/shaders/background.gdshader" id="3_rurhu"]
 [ext_resource type="AudioStream" uid="uid://o05xu3mq52x0" path="res://assets/sfx/point-smooth-beep-230573.mp3" id="3_ycayy"]
 [ext_resource type="AudioStream" uid="uid://punoyagbimeu" path="res://assets/sfx/Crowds, Applause, Applause, Small Group SND123080.wav" id="4_bw6k5"]
@@ -73,7 +73,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_onqr8")
-time_in_minutes = 1
+time_in_minutes = 2
 
 [node name="WordContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
